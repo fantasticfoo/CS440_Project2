@@ -1,0 +1,76 @@
+version: '3.8'
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "5000:5000"
+    depends_on:
+      - pet-service
+      - user-service
+      - stats-service
+
+  pet-service:
+    build: ./pet-service
+    ports:
+      - "3001:3001"
+    environment:
+      - PGUSER=pet_user
+      - PGPASSWORD=password
+      - PGDATABASE=pets
+      - PGHOST=pet-service-db
+    depends_on:
+      - pet-service-db
+
+  pet-service-db:
+    image: postgres
+    container_name: pet-service-db
+    environment:
+      POSTGRES_USER: pet_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: pets
+    volumes:
+      - ./pet-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "3002:3002"
+    environment:
+      - PGUSER=user_user
+      - PGPASSWORD=password
+      - PGDATABASE=users
+      - PGHOST=user-service-db
+    depends_on:
+      - user-service-db
+
+  user-service-db:
+    image: postgres
+    container_name: user-service-db
+    environment:
+      POSTGRES_USER: user_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: users
+    volumes:
+      - ./user-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  stats-service:
+    build: ./stats-service
+    ports:
+      - "3003:3003"
+    environment:
+      - PGUSER=stats_user
+      - PGPASSWORD=password
+      - PGDATABASE=stats
+      - PGHOST=stats-service-db
+    depends_on:
+      - stats-service-db
+
+  stats-service-db:
+    image: postgres
+    container_name: stats-service-db
+    environment:
+      POSTGRES_USER: stats_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: stats
+    volumes:
+      - ./stats-service/init.sql:/docker-entrypoint-initdb.d/init.sql
