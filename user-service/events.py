@@ -1,5 +1,3 @@
-from repositories.user_repository import save_user
-
 import redis
 import json
 
