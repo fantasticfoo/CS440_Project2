@@ -74,3 +74,10 @@ services:
       POSTGRES_DB: stats
     volumes:
       - ./stats-service/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
