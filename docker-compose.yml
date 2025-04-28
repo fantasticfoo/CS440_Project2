@@ -14,10 +14,10 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - PGUSER=pet_user
-      - PGPASSWORD=password
-      - PGDATABASE=pets
-      - PGHOST=pet-service-db
+      - DB_USER=pet_user
+      - DB_PASSWORD=password
+      - DB_NAME=pets
+      - DB_HOST=pet-service-db
     depends_on:
       - pet-service-db
 
@@ -36,10 +36,10 @@ services:
     ports:
       - "3002:3002"
     environment:
-      - PGUSER=user_user
-      - PGPASSWORD=password
-      - PGDATABASE=users
-      - PGHOST=user-service-db
+      - DB_USER=user_user
+      - DB_PASSWORD=password
+      - DB_NAME=users
+      - DB_HOST=user-service-db
     depends_on:
       - user-service-db
 
@@ -58,10 +58,10 @@ services:
     ports:
       - "3003:3003"
     environment:
-      - PGUSER=stats_user
-      - PGPASSWORD=password
-      - PGDATABASE=stats
-      - PGHOST=stats-service-db
+      - DB_USER=stats_user
+      - DB_PASSWORD=password
+      - DB_NAME=stats
+      - DB_HOST=stats-service-db
     depends_on:
       - stats-service-db
 

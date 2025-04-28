@@ -1,6 +1,10 @@
-FROM node:18
+FROM python:3.10-slim
+
 WORKDIR /app
+
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
+
 COPY . .
-RUN npm install
-EXPOSE 3000
-CMD ["node", "server.js"]
+
+CMD ["python", "app.py"]
